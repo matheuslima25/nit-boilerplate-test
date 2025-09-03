@@ -1,0 +1,175 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/local/django/Dockerfile
+    image: ${API_IMAGE_NAME?A variável API_IMAGE_NAME precisa ser definida}:${API_IMAGE_TAG?A variável API_IMAGE_TAG precisa ser definida}
+    command: /start
+    container_name: nitapi
+    environment:
+      - TZ=America/Sao_Paulo
+    volumes:
+      - .:/app
+      - static_volume:/data/nitapi/staticfiles
+      - media_volume:/data/nitapi/mediafiles
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - nitapi
+    deploy:
+      # replicas: 2
+      resources:
+        limits:
+          memory: 1024M
+          cpus: "1"
+        reservations:
+          memory: 512M
+          cpus: "0.50"
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first # Iniciar a nova instância antes de derrubar a antiga
+        failure_action: rollback # Reverte em caso de falha
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    healthcheck:
+      test: curl -f http://localhost:8000/health/ || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./docker/local/postgres/Dockerfile
+    container_name: postgres
+    environment:
+      - TZ=America/Sao_Paulo
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+      - ${HOME}/backups/prd:/backups
+      # - ./db_backups:/backups (if you want to mount the backups folder inside the project)
+    env_file:
+      - ./.envs/.local/.postgres
+    networks:
+      - nitapi
+    ports:
+      - "5432:5432"
+    command: postgres -p 5432
+
+  redis:
+    image: redis:6-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - nitapi
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: rabbitmq
+    environment:
+      - TZ=America/Sao_Paulo
+    ports:
+      - "5672:5672" # Porta para comunicação com Celery
+      - "15672:15672" # Porta para o painel de gerenciamento
+    env_file:
+      - ./.envs/.local/.django
+    networks:
+      - nitapi
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  flower:
+    build:
+      context: .
+      dockerfile: ./docker/local/flower/Dockerfile
+    container_name: flower
+    environment:
+      - TZ=America/Sao_Paulo
+    command: /entrypoint.sh
+    env_file:
+      - ./.envs/.local/.django
+    ports:
+      - "5555:5555"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - nitapi
+
+  celery-worker:
+    build:
+      context: .
+      dockerfile: ./docker/local/django/Dockerfile
+    image: ${API_IMAGE_NAME?A variável API_IMAGE_NAME precisa ser definida}:${API_IMAGE_TAG?A variável API_IMAGE_TAG precisa ser definida}
+    user: "1001:1001"
+    command: >
+      watchmedo auto-restart
+      --directory=./
+      --pattern=*.py
+      --recursive
+      -- celery -A nitapi worker
+      --loglevel=info
+      --concurrency=2
+      --prefetch-multiplier=1
+      --heartbeat-interval=60
+      --pool=threads
+      --queues=default
+    volumes:
+      - .:/app
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    depends_on:
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+    restart: always
+    networks:
+      - nitapi
+    deploy:
+      # replicas: 2
+      resources:
+        limits:
+          memory: 1024M
+          cpus: "1"
+        reservations:
+          memory: 256M
+          cpus: "0.50"
+      update_config:
+        parallelism: 1 # Atualizar uma instância por vez
+        delay: 10s # Esperar 10 segundos entre cada atualização
+        order: start-first # Iniciar a nova instância antes de derrubar a antiga
+      restart_policy:
+        condition: on-failure # Reiniciar apenas em caso de falha
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+networks:
+  nitapi:
+    driver: bridge
+    external: true
+
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
+  static_volume:
+  media_volume:

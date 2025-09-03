@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Notificação - NIT Tecnologia em Saúde</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+        <style>
+            /* Cores da área de saúde */
+            :root {
+                --primary-green: #2E8B57; /* Verde médico */
+                --secondary-blue: #4682B4; /* Azul hospitalar */
+                --accent-teal: #20B2AA; /* Verde-azulado médico */
+                --light-gray: #F8F9FA;
+                --text-dark: #2C3E50;
+                --text-light: #7F8C8D;
+                --white: #FFFFFF;
+                --success: #27AE60;
+                --info: #3498DB;
+                --warning: #F39C12;
+                --danger: #E74C3C;
+            }
+        </style>
+    </head>
+
+    <body style="margin: 0; padding: 0; background-color: #F8F9FA; font-family: 'Inter', Arial, sans-serif;">
+        <div style="background: linear-gradient(135deg, #F8F9FA 0%, #E8F4F8 100%); padding: 20px 10px;">
+            <table style="border: 0; margin: 0 auto; max-width: 650px; width: 100%; background: #FFFFFF; border-radius: 12px; box-shadow: 0 4px 20px rgba(46, 139, 87, 0.1);">
+                <tbody>
+                    <!-- Header com Logo NIT -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #2E8B57 0%, #20B2AA 100%); text-align: center; padding: 30px 20px; border-radius: 12px 12px 0 0;">
+                            <div style="display: inline-block; background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 50%; margin-bottom: 15px;">
+                                <div style="width: 60px; height: 60px; background: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; color: #2E8B57;">
+                                    NIT
+                                </div>
+                            </div>
+                            <h1 style="color: #FFFFFF; font-size: 24px; font-weight: 600; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                NIT - Tecnologia em Saúde
+                            </h1>
+                            <p style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin: 5px 0 0 0; font-weight: 300;">
+                                Inovação e cuidado em cada solução
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Corpo da Notificação -->
+                    <tr>
+                        <td style="padding: 0;">
+                            <table style="border: 0; background: #FFFFFF; width: 100%; margin: 0;">
+                                <tbody>
+                                    <!-- Título da Notificação -->
+                                    <tr>
+                                        <td style="background: linear-gradient(90deg, #4682B4 0%, #20B2AA 100%); color: #FFFFFF; padding: 20px 30px; font-size: 18px; font-weight: 600;">
+                                            <div style="display: flex; align-items: center;">
+                                                <div style="width: 32px; height: 32px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 16px;">
+                                                    🔔
+                                                </div>
+                                                <h2 style="margin: 0; font-size: 18px;">{{ assunto|default:"Nova Notificação" }}</h2>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Conteúdo Principal -->
+                                    <tr>
+                                        <td style="background: #FFFFFF; padding: 30px; color: #2C3E50; font-size: 15px; font-weight: 400; line-height: 1.6;">
+                                            <!-- Saudação Personalizada -->
+                                            <div style="background: linear-gradient(90deg, #F8F9FA 0%, #E8F4F8 100%); padding: 20px; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid #2E8B57;">
+                                                <p style="margin: 0; font-weight: 600; color: #2E8B57; font-size: 16px;">
+                                                    {% if nome %}
+                                                        Olá, {{ nome }}! 👋
+                                                    {% else %}
+                                                        Olá! 👋
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+
+                                            <!-- Mensagem Principal -->
+                                            <div style="margin-bottom: 25px;">
+                                                <p style="color: #2C3E50; margin: 0 0 15px 0; font-size: 15px; line-height: 1.6;">
+                                                    {{ mensagem|default:"Você tem uma nova notificação importante do sistema NIT." }}
+                                                </p>
+                                            </div>
+
+                                            <!-- Informações Adicionais (se houver) -->
+                                            {% if informacoes_adicionais %}
+                                            <div style="background: #F8F9FA; padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #E8F4F8;">
+                                                <h3 style="color: #4682B4; font-size: 16px; margin: 0 0 10px 0; font-weight: 600;">
+                                                    ℹ️ Informações Adicionais
+                                                </h3>
+                                                <p style="color: #2C3E50; margin: 0; font-size: 14px; line-height: 1.5;">
+                                                    {{ informacoes_adicionais }}
+                                                </p>
+                                            </div>
+                                            {% endif %}
+
+                                            <!-- Botão de Ação (se houver link) -->
+                                            {% if link %}
+                                            <div style="text-align: center; margin: 30px 0;">
+                                                <a href="{{ link }}" 
+                                                   style="display: inline-block; background: linear-gradient(135deg, #2E8B57 0%, #20B2AA 100%); color: #FFFFFF; text-decoration: none; padding: 15px 30px; border-radius: 25px; font-weight: 600; font-size: 15px; box-shadow: 0 4px 15px rgba(46, 139, 87, 0.3); transition: all 0.3s ease;">
+                                                    {{ texto_botao|default:"Acessar Sistema" }} →
+                                                </a>
+                                            </div>
+                                            {% endif %}
+
+                                            <!-- Informações de Contato -->
+                                            <div style="background: linear-gradient(90deg, #F8F9FA 0%, #E8F4F8 100%); padding: 20px; border-radius: 8px; margin-top: 25px;">
+                                                <p style="color: #7F8C8D; margin: 0; font-size: 14px; text-align: center; line-height: 1.5;">
+                                                    <strong style="color: #2E8B57;">NIT - Tecnologia em Saúde</strong><br>
+                                                    Precisa de ajuda? Entre em contato conosco<br>
+                                                    📧 suporte@nit.com.br | 📞 (11) 9999-9999
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Rodapé -->
+                                    <tr>
+                                        <td style="background: linear-gradient(135deg, #2C3E50 0%, #34495E 100%); color: #BDC3C7; text-align: center; padding: 25px 30px; border-radius: 0 0 12px 12px;">
+                                            <div style="margin-bottom: 15px;">
+                                                <p style="margin: 0; font-size: 13px; font-weight: 400; line-height: 1.5;">
+                                                    <strong style="color: #FFFFFF;">NIT - Tecnologia em Saúde</strong><br>
+                                                    Transformando o cuidado através da inovação tecnológica
+                                                </p>
+                                            </div>
+                                            <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 15px;">
+                                                <p style="margin: 0; font-size: 12px; color: #95A5A6;">
+                                                    © {{ site_name|default:"Sistema NIT" }} - Todos os direitos reservados<br>
+                                                    Este é um e-mail automático, não responda esta mensagem.
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- Espaçamento inferior -->
+            <div style="height: 20px;"></div>
+        </div>
+    </body>
+</html>

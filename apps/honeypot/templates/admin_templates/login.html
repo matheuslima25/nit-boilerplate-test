@@ -1,0 +1,8 @@
+{% extends 'admin/login.html' %}{% load static %}
+
+{% block branding %}
+    <div style="display: flex; flex-direction: column;">
+        <a id="nit" href="{% url 'admin_honeypot:index' %}"><img class="logo-default" src="{% static 'logo/logo.png' %}" alt="Logo" height="55"></a>
+        <span>{{ site_header|default:_('Django administration') }}</span>
+    </div>
+{% endblock %}

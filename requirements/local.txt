@@ -1,0 +1,21 @@
+-r base.txt
+
+# Linting e formatação
+flake8==5.0.4
+black==22.8.0
+isort==5.9.3
+
+# Desenvolvimento e debugging
+argh==0.26.2
+watchdog==2.1.6
+django-debug-toolbar==3.6.0
+
+# Testing e quality assurance
+pytest==7.4.3
+pytest-django==4.7.0
+pytest-cov==4.1.0
+factory-boy==3.3.0
+
+# Documentation
+mkdocs==1.5.3
+mkdocs-material==9.4.8

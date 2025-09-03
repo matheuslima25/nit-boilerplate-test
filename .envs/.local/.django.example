@@ -1,0 +1,38 @@
+DJANGO_SECRET_KEY="change-me"
+DJANGO_DEBUG=True
+BASE_URL=http://localhost:8000
+
+# Database
+DATABASE_URL=postgres://postgres:postgres@postgres:5432/nitapi_db
+
+# Cache
+USE_CACHE=False
+CACHE_HOST=redis://redis:6379/0
+
+# Storage (S3 opcional)
+USE_S3=False
+# AWS_ACCESS_KEY_ID=
+# AWS_SECRET_ACCESS_KEY=
+# AWS_STORAGE_BUCKET_NAME=
+# AWS_REGION=
+
+# Celery / RabbitMQ
+RABBITMQ_DEFAULT_USER=admin
+RABBITMQ_DEFAULT_PASS=change-me
+CELERY_RESULT_BACKEND=redis://redis:6379/1
+
+# Site
+SITE_URL=http://localhost:8000
+DEFAULT_TIMEOUT=60
+
+# Keycloak
+KEYCLOAK_SERVER_URL=http://localhost:8080
+KEYCLOAK_REALM=nit-services
+KEYCLOAK_CLIENT_ID=nit-api
+# KEYCLOAK_CLIENT_SECRET=
+# KEYCLOAK_ADMIN_USERNAME=
+# KEYCLOAK_ADMIN_PASSWORD=
+
+# Kong (opcional)
+# KONG_ADMIN_URL=http://localhost:8001
+# KONG_GATEWAY_URL=http://localhost:8000

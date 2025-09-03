@@ -1,0 +1,3 @@
+POSTGRES_DB=nitapi_db
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres

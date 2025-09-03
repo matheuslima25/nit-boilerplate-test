@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+>&2 echo "Production..."
+python3 manage.py migrate --no-input
+#python3 manage.py collectstatic --no-input
+#python3 manage.py loaddata initial.json
+#python3 manage.py loaddata groups.json
+#python3 manage.py loaddata theme.json
+#python3 manage.py loaddata emails.json
+#/usr/local/bin/gunicorn nitapi.wsgi --bind 0.0.0.0:8000 --chdir=/app  &
+gunicorn nitapi.wsgi:application --bind 0.0.0.0:8000

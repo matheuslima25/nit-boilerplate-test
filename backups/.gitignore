@@ -1,0 +1,3 @@
+# Ignora todos os arquivos de backup, mantém apenas este arquivo
+*
+!.gitignore

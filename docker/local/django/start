@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+>&2 echo "Local..."
+python3 manage.py migrate --no-input
+# python3 manage.py collectstatic --no-input
+# python3 manage.py loaddata theme.json
+# python3 manage.py crontab add
+chown -R 1001:1001 /app/nitapi/logs
+python3 manage.py runserver 0.0.0.0:8000
+# gunicorn nitapi.wsgi:application --workers=1 --worker-class=gevent --bind 0.0.0.0:8000 --timeout 60

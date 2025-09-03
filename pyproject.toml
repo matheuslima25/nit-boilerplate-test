@@ -1,0 +1,118 @@
+[tool.black]
+line-length = 79
+target-version = ['py310', 'py311', 'py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+  | migrations
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 88
+skip_glob = "**/migrations/*.py"
+src_paths = ["nitapi", "apps"]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+
+[tool.ruff]
+# Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default.
+select = ["E", "F", "W", "C", "B", "D", "T", "C4"]
+ignore = ["E501"]  # Ignora erro de linha muito longa, já que formatters cuidam disso
+line-length = 79
+target-version = "py310"
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+    "*/migrations/*",
+    "*/staticfiles/*",
+    "*/mediafiles/*",
+    ".envs/*",
+]
+
+[tool.ruff.per-file-ignores]
+# Wildcards em settings são comuns e podem ser ignorados
+"nitapi/settings/local.py" = ["F403", "F405"]
+"nitapi/settings/production.py" = ["F401", "F403", "F405"]
+"nitapi/settings/base.py" = ["F403", "F405"]
+# Em __init__.py é comum importar para expor em pacotes
+"*/__init__.py" = ["F401"]
+
+[tool.mypy]
+python_version = "3.10"
+check_untyped_defs = true
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
+exclude = [
+    "migrations/",
+    "tests/",
+    "venv/",
+    ".venv/",
+]
+
+[tool.coverage.run]
+source = ["nitapi", "apps"]
+omit = [
+    "*/migrations/*",
+    "*/tests/*",
+    "*/apps.py",
+    "*/__init__.py",
+    "manage.py",
+    "conftest.py",
+    "*/settings/*",
+    "*/*asgi.py",
+    "*/*wsgi.py",
+    "*/*urls.py",
+]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]

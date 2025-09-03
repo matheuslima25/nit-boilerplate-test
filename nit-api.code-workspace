@@ -1,0 +1,57 @@
+{
+    "folders": [
+        {
+            "name": "NIT API",
+            "path": "."
+        }
+    ],
+    "settings": {
+        // Force workspace settings to override user settings
+        "workbench.settings.editor": "json",
+        "workbench.settings.useSplitJSON": true,
+
+        // Completely disable built-in formatters for Python
+        "python.linting.enabled": false,
+        "python.linting.lintOnSave": false,
+        "python.formatting.provider": "none",
+
+        // Disable all automatic formatting
+        "editor.formatOnSave": false,
+        "editor.formatOnPaste": false,
+        "editor.formatOnType": false,
+
+        // Python-specific overrides
+        "[python]": {
+            "editor.formatOnSave": false,
+            "editor.formatOnPaste": false,
+            "editor.formatOnType": false,
+            "editor.codeActionsOnSave": {},
+            "editor.defaultFormatter": null
+        },
+
+        // Terminal
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.cwd": "${workspaceFolder}",
+
+        // Theme
+        "workbench.colorTheme": "Default Dark+",
+        "workbench.iconTheme": "material-icon-theme",
+
+        // Explorer
+        "explorer.confirmDragAndDrop": false,
+        "explorer.confirmDelete": false,
+
+        // Git
+        "git.openRepositoryInParentFolders": "always",
+
+        // Disable extensions that might interfere
+        "ruff.enable": false,
+        "black-formatter.enable": false,
+        "mypy-type-checker.enable": false
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-python.python"
+        ]
+    }
+}
