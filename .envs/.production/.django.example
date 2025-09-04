@@ -20,11 +20,6 @@ USE_S3=False
 SITE_URL=https://api.exemplo.com
 DEFAULT_TIMEOUT=60
 
-# Celery / RabbitMQ
-RABBITMQ_DEFAULT_USER=admin
-RABBITMQ_DEFAULT_PASS=change-me
-CELERY_RESULT_BACKEND=redis://redis:6379/1
-
 # Keycloak
 KEYCLOAK_SERVER_URL=https://keycloak.exemplo.com
 KEYCLOAK_REALM=exemplo

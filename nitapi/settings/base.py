@@ -4,7 +4,6 @@ from pathlib import Path
 import environ
 from corsheaders.defaults import default_headers
 from django.utils.translation import gettext_lazy as _
-from kombu import Queue
 
 env = environ.Env()
 
@@ -56,8 +55,6 @@ THIRD_PARTY_APPS = [
     # Others
     "django_extensions",
     "django_crontab",
-    "django_celery_beat",
-    "django_celery_results"
 ]
 
 HEALTH_CHECK_APPS = [
@@ -323,33 +320,8 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # Default timeout for requests
 DEFAULT_TIMEOUT = env("DEFAULT_TIMEOUT", cast=int)
 
-# Configuração do Celery
-CELERY_BROKER_URL = (
-    f"pyamqp://{env('RABBITMQ_DEFAULT_USER')}:"
-    f"{env('RABBITMQ_DEFAULT_PASS')}@rabbitmq//"
-)
-
-CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND")
-
 # Django Health Check
-BROKER_URL = CELERY_BROKER_URL
 REDIS_URL = env("CACHE_HOST")
-
-CELERY_ACCEPT_CONTENT = ["json"]
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
-
-CELERY_TASK_QUEUES = [
-    Queue("default", routing_key="task.default"),
-]
-
-CELERY_TASK_ROUTES = {
-}
-
-# CONFIGURAÇÃO DA FILA PADRÃO
-CELERY_TASK_DEFAULT_QUEUE = 'default'
-CELERY_TASK_DEFAULT_EXCHANGE = 'default'
-CELERY_TASK_DEFAULT_ROUTING_KEY = 'task.default'
 
 # Keycloak Configuration for Agnostic Authentication
 # Required for auth

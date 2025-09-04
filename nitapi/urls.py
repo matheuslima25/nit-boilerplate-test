@@ -12,7 +12,9 @@ from drf_spectacular.views import (
 
 from .router.api import api_urls
 
-urlpatterns = i18n_patterns(
+# Rotas que NÃO precisam de prefixo de idioma (APIs, health checks, etc.)
+urlpatterns = [
+    path("health/", include("health_check.urls")),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "api/docs/redoc/",
@@ -24,19 +26,22 @@ urlpatterns = i18n_patterns(
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="swagger-ui"
     ),
+    path(
+        "api/",
+        include((api_urls, "nitapi.router.api.api_urls"), namespace="api")
+    ),
+]
+
+# Rotas com internacionalização (admin, páginas web, etc.)
+urlpatterns += i18n_patterns(
     re_path(
         "^admin/",
         include("apps.honeypot.urls", namespace="admin_honeypot")
     ),
     path(settings.ADMIN_URL, admin.site.urls),
-    path("health/", include("health_check.urls")),
     path("", include("apps.commons.urls")),
     path("tinymce/", include("tinymce.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
-    path(
-        "api/",
-        include((api_urls, "nitapi.router.api.api_urls"), namespace="api")
-    ),
     prefix_default_language=False,
 )
 

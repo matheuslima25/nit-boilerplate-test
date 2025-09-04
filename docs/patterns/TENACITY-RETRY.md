@@ -374,49 +374,6 @@ class CEPService:
         }
 ```
 
-### 3. Task Celery com Retry
-
-```python
-from celery import Celery
-from tenacity import retry, stop_after_attempt, wait_exponential
-import logging
-
-logger = logging.getLogger(__name__)
-
-app = Celery('tasks')
-
-@app.task(bind=True)
-def processar_dados_externos(self, data_id: int):
-    """
-    Task Celery que combina retry do Celery com Tenacity
-    para maximum controle sobre reexecuções.
-    """
-
-    @retry(
-        stop=stop_after_attempt(3),
-        wait=wait_exponential(multiplier=2, min=1, max=60),
-        retry=retry_if_exception_type((ConnectionError, TimeoutError))
-    )
-    def _processar():
-        # Lógica de processamento que pode falhar
-        api_service = ExternalAPIService("https://api.externa.com")
-        dados = api_service.get_data(f"/dados/{data_id}")
-
-        # Processar dados...
-        resultado = processar_dados(dados)
-
-        return resultado
-
-    try:
-        return _processar()
-
-    except Exception as exc:
-        logger.error(f"Falha ao processar dados {data_id}: {exc}")
-
-        # Usar retry do Celery para tentar novamente mais tarde
-        raise self.retry(exc=exc, countdown=300, max_retries=3)
-```
-
 ## 🎯 Boas Práticas
 
 ### 1. Configuração de Logs

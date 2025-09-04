@@ -738,52 +738,6 @@
 					"response": []
 				},
 				{
-					"name": "[Rest] celery queue status",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/api/v1/core/request/order/status/?task_id=e0a28b06-cbfc-490c-b04d-c8b7625c01fa",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"core",
-								"request",
-								"order",
-								"status",
-								""
-							],
-							"query": [
-								{
-									"key": "task_id",
-									"value": "e0a28b06-cbfc-490c-b04d-c8b7625c01fa"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "[Rest] dashboard total active lines",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true

@@ -37,7 +37,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 COPY --from=python-build-stage /usr/src/app/wheels /wheels/
 
-# Instala as dependências do Django, incluindo Celery
+# Instala as dependências do Django
 RUN pip install --no-cache-dir --no-index --find-links=/wheels/ /wheels/* \
    && rm -rf /wheels/
 
@@ -70,7 +70,7 @@ COPY . ${APP_HOME}
 
 ENTRYPOINT ["/entrypoint"]
 
-# Executar celery como usuário sem privilégios
+# Executar aplicação como usuário sem privilégios
 # Cria o grupo e usuário com UID/GID 1001 (mesmo usado no docker-compose)
 RUN groupadd -g 1001 appgroup && useradd -u 1001 -g 1001 -ms /bin/bash appuser
 USER appuser

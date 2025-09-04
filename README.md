@@ -1,7 +1,7 @@
 
 # NIT API
 
-API moderna baseada em Django REST Framework, com autenticação Keycloak + Kong API Gateway, suporte a mensageria via Celery + RabbitMQ, health checks integrados, infraestrutura conteinerizada e documentação interativa.
+API moderna baseada em Django REST Framework, com autenticação Keycloak + Kong API Gateway, health checks integrados, infraestrutura conteinerizada e documentação interativa.
 
 ## 🏗️ Arquitetura
 
@@ -12,7 +12,6 @@ Este projeto utiliza uma arquitetura moderna baseada em:
 - **Kong API Gateway** - Gateway, rate limiting e roteamento
 - **PostgreSQL** - Banco de dados principal
 - **Redis** - Cache e sessions
-- **Celery + RabbitMQ** - Processamento assíncrono
 - **Docker** - Conteinerização completa
 
 ## 🔐 Sistema de Autenticação
@@ -60,7 +59,6 @@ nit-api/
 │   ├── static/ & staticfiles/   # Arquivos estáticos
 │   ├── media/ & mediafiles/     # Arquivos de mídia
 │   ├── logs/                    # Logs da aplicação
-│   ├── celery.py                # Configuração do Celery
 │   ├── asgi.py / wsgi.py        # Entry points ASGI/WSGI
 │   ├── storage_backends.py      # Armazenamento customizado
 │   └── urls.py                  # Rotas principais
@@ -224,7 +222,6 @@ Importe o arquivo [`postman_collection.json`](postman_collection.json) no Postma
 
 - Django 5+ com DRF
 - Suporte a múltiplos ambientes (`local.py`, `production.py`)
-- Celery + RabbitMQ com monitoramento de tarefas
 - Configuração de storage customizado
 - Gerador automático de logs
 - Deploy automatizado via `deploy.sh`, com criação de imagens de backup

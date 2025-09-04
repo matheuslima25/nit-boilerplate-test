@@ -1,10 +1,13 @@
 name: CI/CD Pipeline
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
+  # # Adicionar gatilho para push em projetos reais
+  # push:
+  #   branches: [ main ]
+  # # Adicionar gatilho para pull_request em projetos reais
+  # pull_request:
+  #   branches: [ main ]
 
 jobs:
   test:

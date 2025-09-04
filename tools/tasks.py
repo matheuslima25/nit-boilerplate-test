@@ -55,7 +55,7 @@ class Tasks:
             msg.send()
 
         except Exception as exc:
-            error_subject = "Celery send_email_task failure"
+            error_subject = "send_email_task failure"
             error_message = "%s\n%s" % (traceback.format_exc(), locals())
             mail_admins(error_subject, error_message)
             raise exc

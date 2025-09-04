@@ -63,14 +63,6 @@ DEFAULT_FILE_STORAGE=django.core.files.storage.FileSystemStorage
 STATICFILES_STORAGE=whitenoise.storage.CompressedManifestStaticFilesStorage
 
 # ========================================
-# CELERY (Desenvolvimento)
-# ========================================
-
-CELERY_BROKER_URL=redis://localhost:6379/1
-CELERY_RESULT_BACKEND=redis://localhost:6379/1
-CELERY_TASK_ALWAYS_EAGER=False
-
-# ========================================
 # LOGGING (Desenvolvimento)
 # ========================================
 
@@ -149,18 +141,6 @@ AWS_SECRET_ACCESS_KEY=sua-secret-key-aws
 AWS_STORAGE_BUCKET_NAME=nit-api-storage-prod
 AWS_S3_REGION_NAME=us-east-1
 AWS_S3_CUSTOM_DOMAIN=cdn.suaempresa.com
-
-# ========================================
-# CELERY (Produção)
-# ========================================
-
-CELERY_BROKER_URL=redis://redis-cluster.internal:6379/1
-CELERY_RESULT_BACKEND=redis://redis-cluster.internal:6379/1
-CELERY_TASK_ALWAYS_EAGER=False
-
-# Worker Configuration
-CELERYD_CONCURRENCY=4
-CELERYD_MAX_TASKS_PER_CHILD=1000
 
 # ========================================
 # MONITORING & LOGGING
@@ -320,28 +300,6 @@ services:
       - kong-migration
     networks:
       - nit_network
-
-  # Celery Worker
-  celeryworker:
-    <<: *django
-    image: nit_api_local_celeryworker
-    container_name: nit_api_local_celeryworker
-    depends_on:
-      - redis
-      - postgres
-    ports: []
-    command: /start-celeryworker
-
-  # Celery Beat
-  celerybeat:
-    <<: *django
-    image: nit_api_local_celerybeat
-    container_name: nit_api_local_celerybeat
-    depends_on:
-      - redis
-      - postgres
-    ports: []
-    command: /start-celerybeat
 
 volumes:
   nit_api_local_postgres_data:

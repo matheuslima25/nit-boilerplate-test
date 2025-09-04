@@ -253,26 +253,6 @@ class EnderecoViewSet(ViewSet):
             )
 ```
 
-### Tasks Celery
-
-```python
-from celery import Celery
-from tools.retry_service import api_retry, ExternalAPIClient
-
-app = Celery('nit_tasks')
-
-@app.task
-@api_retry
-def sincronizar_dados_externos(data_id):
-    """Task para sincronizar dados com API externa"""
-    api_client = ExternalAPIClient("https://api.fornecedor.com")
-
-    dados = api_client.get(f"/dados/{data_id}")
-
-    # Processar e salvar dados...
-    return f"Dados {data_id} sincronizados com sucesso"
-```
-
 ---
 
 **📝 Nota**: Para mais detalhes, consulte a documentação completa em

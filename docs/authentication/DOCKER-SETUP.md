@@ -324,10 +324,6 @@ EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
 # Storage (opcional)
 DEFAULT_FILE_STORAGE=django.core.files.storage.FileSystemStorage
 STATICFILES_STORAGE=whitenoise.storage.CompressedManifestStaticFilesStorage
-
-# Celery (opcional)
-CELERY_BROKER_URL=redis://localhost:6379/1
-CELERY_RESULT_BACKEND=redis://localhost:6379/1
 ```
 
 ## Comandos Úteis

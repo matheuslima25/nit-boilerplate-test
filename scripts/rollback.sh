@@ -38,14 +38,14 @@ echo "♻️  Restaurando para a versão: ${ROLLBACK_TO_VERSION}"
 export API_IMAGE_NAME=${IMAGE_NAME}
 export API_IMAGE_TAG=${ROLLBACK_TO_VERSION}
 
-# Para e remove os containers da aplicação (api e worker)
-echo "🛑 Parando e removendo containers atuais (api, celery-worker)..."
-${COMPOSE_CMD} -f "${COMPOSE_FILE}" stop api celery-worker 2>&1
-${COMPOSE_CMD} -f "${COMPOSE_FILE}" rm -f api celery-worker 2>&1
+# Para e remove os containers da aplicação (api)
+echo "🛑 Parando e removendo containers atuais (api)..."
+${COMPOSE_CMD} -f "${COMPOSE_FILE}" stop api 2>&1
+${COMPOSE_CMD} -f "${COMPOSE_FILE}" rm -f api 2>&1
 
 # Sobe os containers da aplicação com a imagem da versão de rollback
 echo "✨ Subindo containers com a versão ${ROLLBACK_TO_VERSION}..."
-${COMPOSE_CMD} -f "${COMPOSE_FILE}" up -d api celery-worker 2>&1
+${COMPOSE_CMD} -f "${COMPOSE_FILE}" up -d api 2>&1
 
 # --- ROTAÇÃO INVERSA ---
 # Remove a imagem da versão que deu problema
