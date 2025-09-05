@@ -33,22 +33,17 @@ class CoreConfig(AppConfig):
     def ready(self):
         """Método executado quando a aplicação está pronta.
 
-        Registra automaticamente os health checks customizados para
-        monitoramento da saúde dos serviços externos (Keycloak e Kong).
-
-        Os health checks são opcionais e só são registrados se o pacote
-        django-health-check estiver disponível.
+        Configura health checks para execução apenas on-demand.
         """
-        try:
-            from health_check.plugins import plugin_dir
+        self._register_health_checks()
 
-            # Importa e registra nossos health checks customizados
-            from .checks.keycloak import KeycloakHealthCheck
-            from .checks.kong import KongHealthCheck
-
-            plugin_dir.register(KeycloakHealthCheck)
-            plugin_dir.register(KongHealthCheck)
-
-        except ImportError:
-            # health_check não disponível, ignora silenciosamente
-            pass
+    def _register_health_checks(self):
+        """
+        Health checks configurados para execução on-demand.
+        
+        Em vez de polling automático, os health checks agora funcionam
+        apenas quando solicitados através dos endpoints REST.
+        """
+        # Health checks automáticos desabilitados
+        # Use endpoints /commons/status/ para verificações on-demand
+        pass

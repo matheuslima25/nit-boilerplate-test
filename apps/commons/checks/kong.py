@@ -5,9 +5,11 @@ from health_check.exceptions import HealthCheckException
 
 
 class KongHealthCheck(BaseHealthCheckBackend):
-    """Health check básico para Kong Gateway."""
+    """Health check para Kong Gateway - apenas on-demand."""
 
     critical_service = False
+    # Desabilita execução automática - apenas manual
+    run_check = False
 
     def check_status(self):
         """Verifica se Kong está acessível."""

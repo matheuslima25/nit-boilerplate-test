@@ -17,10 +17,10 @@ services:
       - ./.envs/.production/.django
       - ./.envs/.production/.postgres
     depends_on:
-      - postgres
       - redis
     networks:
       - nitapi
+      - infra_infra  # Conecta à rede externa se disponível
     deploy:
       replicas: 2
       resources:
@@ -39,12 +39,6 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-      healthcheck:
-        test: curl -f http://localhost:8000/health/ || exit 1
-        interval: 30s
-        timeout: 10s
-        retries: 3
-        start_period: 30s
 
   redis:
     image: redis:6-alpine
@@ -57,10 +51,9 @@ services:
 networks:
   nitapi:
     driver: bridge
-    external: true
+  infra_infra:
+    external: true  # Conecta aos serviços externos se disponível
 
 volumes:
-  local_postgres_data: {}
-  local_postgres_data_backups: {}
   static_volume:
   media_volume:

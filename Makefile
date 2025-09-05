@@ -93,9 +93,12 @@ help:
 
 # --- COMANDOS PRINCIPAIS DE DESENVOLVIMENTO ---
 
-# Garante que a rede do projeto exista
+# Garante que as redes necessárias existam para conectar com serviços externos
 create-network:
-	@docker network ls | grep -q "nitapi" || docker network create nitapi
+	@echo "🌐 Verificando e criando redes necessárias..."
+	@docker network ls | grep -q "nitapi" || (docker network create nitapi && echo "✅ Rede 'nitapi' criada")
+	@docker network ls | grep -q "infra_infra" || (docker network create infra_infra && echo "✅ Rede 'infra_infra' criada para conectar aos serviços externos")
+	@echo "✅ Todas as redes estão disponíveis"
 
 # Gera um .env na raiz com BASE_URL extraída do ./.envs/.local/.django
 prepare-env: create-network
@@ -116,6 +119,17 @@ build: prepare-env
 	@export API_IMAGE_NAME=$(IMAGE_NAME); \
 	export API_IMAGE_TAG=$(CURRENT_VERSION); \
 	$(COMPOSE_CMD) -f $(yml) up --build -d --remove-orphans
+
+# Setup completo para primeira execução (build + schema + migrations)
+first-run: build setup-database
+	@echo "🎉 Setup inicial completo!"
+	@echo "   - Containers construídos e iniciados"
+	@echo "   - Schema específico criado" 
+	@echo "   - Migrações aplicadas"
+	@echo ""
+	@echo "📝 Próximos passos opcionais:"
+	@echo "   make createsuperuser  # Criar usuário admin"
+	@echo "   make collectstatic    # Coletar arquivos estáticos"
 
 # Inicia TODOS os containers, garantindo que a API use a imagem com a versão correta
 start: prepare-env
@@ -161,6 +175,15 @@ logs-api:
 # Command to run the django migrate script
 migrate:
 	${COMPOSE_CMD} -f ${yml} run --rm api python3 manage.py migrate
+
+# Command to create database schema for this API instance
+create-schema:
+	@echo "🏗️  Criando schema específico para esta API..."
+	${COMPOSE_CMD} -f ${yml} run --rm api python3 manage.py create_schema
+
+# Complete database setup (schema + migrations)
+setup-database: create-schema migrate
+	@echo "✅ Database setup concluído! Schema criado e migrações aplicadas."
 
 # Command to run the django makemigrations script
 makemigrations:

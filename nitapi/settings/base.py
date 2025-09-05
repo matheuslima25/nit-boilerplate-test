@@ -162,6 +162,12 @@ DATABASES = {"default": env.db("DATABASE_URL")}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 DATABASES["default"]["ENGINE"] = "django.db.backends.postgresql"
 
+# Schema específico para isolamento de dados entre diferentes APIs
+DATABASE_SCHEMA = env("DATABASE_SCHEMA", default="public")
+DATABASES["default"]["OPTIONS"] = {
+    "options": f"-c search_path={DATABASE_SCHEMA},public"
+}
+
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",

@@ -5,9 +5,11 @@ from health_check.exceptions import HealthCheckException
 
 
 class KeycloakHealthCheck(BaseHealthCheckBackend):
-    """Health check básico para conectividade com Keycloak."""
+    """Health check para conectividade com Keycloak - apenas on-demand."""
 
     critical_service = False
+    # Desabilita execução automática - apenas manual
+    run_check = False
 
     def check_status(self):
         """Verifica se o Keycloak está acessível."""

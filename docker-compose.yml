@@ -24,6 +24,7 @@ services:
       - redis
     networks:
       - nitapi
+      - infra_infra
     deploy:
       # replicas: 2
       resources:
@@ -43,18 +44,12 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-    healthcheck:
-      test: curl -f http://localhost:8000/health/ || exit 1
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
 
   postgres:
     build:
       context: .
       dockerfile: ./docker/local/postgres/Dockerfile
-    container_name: postgres
+    container_name: nitapi-postgres
     environment:
       - TZ=America/Sao_Paulo
     volumes:
@@ -71,7 +66,7 @@ services:
 
   redis:
     image: redis:6-alpine
-    container_name: redis
+    container_name: nitapi-redis
     ports:
       - "6379:6379"
     networks:
@@ -80,6 +75,8 @@ services:
 networks:
   nitapi:
     driver: bridge
+  infra_infra:
+    external: true
 
 volumes:
   local_postgres_data: {}
