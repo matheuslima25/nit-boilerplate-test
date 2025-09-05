@@ -1,11 +1,12 @@
 """Keycloak authentication backend for Django REST Framework."""
 import logging
+
+import jwt
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import BaseBackend
-from django.conf import settings
-from keycloak import KeycloakOpenID, KeycloakError
-import jwt
-from jwt.exceptions import InvalidTokenError, ExpiredSignatureError
+from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
+from keycloak import KeycloakError, KeycloakOpenID
 
 logger = logging.getLogger(__name__)
 User = get_user_model()
@@ -26,6 +27,10 @@ class KeycloakAuthentication(BaseBackend):
 
     def authenticate(self, request, token=None, **kwargs):
         """Authenticate user using Keycloak JWT token."""
+        # Se for uma requisição admin, não usar autenticação Keycloak
+        if hasattr(request, 'is_admin_request') and request.is_admin_request:
+            return None
+
         if not token:
             return None
 

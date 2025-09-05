@@ -92,6 +92,8 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    # Middleware personalizado para separar autenticação admin/API
+    "nitapi.admin_middleware.AdminAuthenticationMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -175,9 +177,12 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
 ]
 
-AUTHENTICATION_BACKENDS = (
+AUTHENTICATION_BACKENDS = [
+    # Django admin usa autenticação tradicional
+    "django.contrib.auth.backends.ModelBackend",
+    # API usa autenticação Keycloak
     "nitapi.authentication.KeycloakAuthentication",
-)
+]
 
 AUTH_USER_MODEL = "users.User"
 

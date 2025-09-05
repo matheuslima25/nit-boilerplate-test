@@ -3,9 +3,9 @@ Management command para criar o schema específico da aplicação.
 Este comando deve ser executado antes das migrações em produção.
 """
 
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db import connection
-from django.conf import settings
 
 
 class Command(BaseCommand):
