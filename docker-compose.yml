@@ -7,7 +7,7 @@ services:
     command: /start
     container_name: nitapi
     environment:
-      - TZ=America/Sao_Paulo
+      - TZ=America/Recife
     volumes:
       - .:/app
       - static_volume:/data/nitapi/staticfiles
@@ -51,7 +51,7 @@ services:
       dockerfile: ./docker/local/postgres/Dockerfile
     container_name: nitapi-postgres
     environment:
-      - TZ=America/Sao_Paulo
+      - TZ=America/Recife
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
       - ${HOME}/backups/prd:/backups

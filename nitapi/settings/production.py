@@ -63,7 +63,8 @@ LOGGING = {
     "formatters": {
         "verbose": {
             "format": (
-                "[{asctime}] {levelname} {module} {process:d} {thread:d} {message}"
+                "[{asctime}] {levelname} {module} {process:d} "
+                "{thread:d} {message}"
             ),
             "style": "{",
         },

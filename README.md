@@ -149,16 +149,6 @@ make quality-check
 
 O sistema inclui health checks integrados usando Django Health Check framework.
 
-### Verificação Rápida
-
-```bash
-# Usando o script integrado
-python scripts/health_check.py
-
-# Ou via curl
-curl http://localhost:8000/health/
-```
-
 ### Health Checks Disponíveis
 
 **Serviços Básicos:**
@@ -201,14 +191,15 @@ GET /health/
 
 ## 🔐 Autenticação
 
-A autenticação é feita via JWT, com endpoints padrão do Simple JWT. O token pode ser usado nos headers com `Authorization: Bearer <token>`.
+A autenticação é feita via JWT, com endpoints no padrão do Simple JWT. O token pode ser usado nos headers com `Authorization: Bearer <token>`.
 
 ---
 
 ## 📚 Documentação da API
 
-- Swagger: [http://localhost:8000/api/schema/](http://localhost:8000/api/schema/)
-- CoreAPI: [http://localhost:8000/api/docs/](http://localhost:8000/api/docs/)
+- Schema: [http://localhost:8000/api/schema/](http://localhost:8000/api/schema/)
+- Redoc: [http://localhost:8000/api/docs/redoc/](http://localhost:8000/api/docs/redoc/)
+- Swagger: [http://localhost:8000/api/schema/](http://localhost:8000/api/docs/swagger/)
 
 ---
 

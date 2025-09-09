@@ -55,16 +55,16 @@ class KeycloakAuthentication(BaseBackend):
                 token,
                 options={"verify_signature": False, "verify_exp": False}
             )
-            
+
             # Check if token is not expired
             import time
             current_time = int(time.time())
             exp = decoded_token.get('exp', 0)
-            
+
             if exp < current_time:
                 logger.warning("Token has expired")
                 return None
-            
+
             # Check issuer - accept both localhost and keycloak-auth
             iss = decoded_token.get('iss', '')
             keycloak_url = settings.KEYCLOAK_SERVER_URL
@@ -74,13 +74,13 @@ class KeycloakAuthentication(BaseBackend):
                 f"http://localhost:8080/realms/{realm}",
                 f"http://keycloak-auth:8080/realms/{realm}"
             ]
-            
+
             if iss not in valid_issuers:
                 logger.warning(
                     f"Invalid issuer: {iss}. Expected one of: {valid_issuers}"
                 )
                 return None
-                
+
             # Try to validate with Keycloak introspect - but don't fail
             try:
                 token_info = self.keycloak_openid.introspect(token)

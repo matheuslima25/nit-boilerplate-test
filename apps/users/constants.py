@@ -13,10 +13,22 @@ class UserConstants(object):
     USER_STATUS_INACTIVE_LABEL = _("Inativo")
 
     USER_STATUSES = [
-        (USER_STATUS_REGISTER_UNCOMPLETED, USER_STATUS_REGISTER_UNCOMPLETED_LABEL),
-        (USER_STATUS_ACTIVE, USER_STATUS_ACTIVE_LABEL),
-        (USER_STATUS_BANNED, USER_STATUS_BANNED_LABEL),
-        (USER_STATUS_INACTIVE, USER_STATUS_INACTIVE_LABEL),
+        (
+            USER_STATUS_REGISTER_UNCOMPLETED,
+            USER_STATUS_REGISTER_UNCOMPLETED_LABEL
+        ),
+        (
+            USER_STATUS_ACTIVE,
+            USER_STATUS_ACTIVE_LABEL
+        ),
+        (
+            USER_STATUS_BANNED,
+            USER_STATUS_BANNED_LABEL
+        ),
+        (
+            USER_STATUS_INACTIVE,
+            USER_STATUS_INACTIVE_LABEL
+        ),
     ]
 
     USERNAME_REGEX = r"^(?=[a-zA-Z0-9._]{3,20}$)(?!.*[_.]{2})[^.].*[^.]$"

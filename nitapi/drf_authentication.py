@@ -40,8 +40,10 @@ class KeycloakJWTAuthentication(authentication.BaseAuthentication):
             msg = 'Invalid token header. No credentials provided.'
             raise exceptions.AuthenticationFailed(msg)
         elif len(auth_parts) > 2:
-            msg = ('Invalid token header. Token string should not '
-                   'contain spaces.')
+            msg = (
+                'Invalid token header. Token string should not contain '
+                'spaces.'
+            )
             raise exceptions.AuthenticationFailed(msg)
 
         token = auth_parts[1]

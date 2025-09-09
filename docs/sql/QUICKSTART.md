@@ -5,8 +5,8 @@ Esta pasta contém documentação e exemplos para uso seguro de queries SQL no p
 ## 📁 Estrutura
 
 - `README.md` - Guia completo de boas práticas
-- `security.md` - Configurações e padrões de segurança
-- `../queries/` - Arquivos SQL e código Python
+- `SECURITY.md` - Configurações e padrões de segurança
+- `../tools/queries/` - Arquivos SQL e código Python
 
 ## 🚀 Início Rápido
 

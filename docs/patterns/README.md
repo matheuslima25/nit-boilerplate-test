@@ -45,7 +45,7 @@ print(retry_metrics.get_summary())
 
 ## 📚 Documentação
 
-- [Guia Completo do Tenacity](tenacity-retry.md)
+- [Guia Completo do Tenacity](TENACITY-RETRY.md)
 - [Configuração e Setup](SETUP.md)
 
 ## 🎯 Casos de Uso

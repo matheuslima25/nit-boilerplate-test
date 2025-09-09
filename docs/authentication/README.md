@@ -5,9 +5,11 @@ Esta pasta contém toda a documentação necessária para configurar e usar este
 ## 📚 Documentos Disponíveis
 
 ### 🚀 [Setup Principal](./KEYCLOAK-KONG-SETUP.md)
+
 Guia completo de configuração inicial para novos projetos.
 
 **Conteúdo:**
+
 - Arquitetura de autenticação
 - Configuração do Keycloak
 - Setup do Kong API Gateway
@@ -16,20 +18,12 @@ Guia completo de configuração inicial para novos projetos.
 - Middleware Kong
 - Testes de configuração
 
-### 🔄 [Guia de Migração](./MIGRATION-GUIDE.md)
-Como migrar projetos Django existentes para Keycloak + Kong.
-
-**Conteúdo:**
-- Passo a passo da migração
-- Extensão do modelo User
-- Remoção de autenticação antiga
-- Checklist completo
-- Rollback em caso de problemas
-
 ### 🛠️ [Troubleshooting](./TROUBLESHOOTING.md)
+
 Soluções para problemas comuns.
 
 **Conteúdo:**
+
 - Problemas de autenticação
 - Issues com Kong Gateway
 - Conectividade Keycloak
@@ -59,15 +53,18 @@ graph TB
 ## 🔧 Componentes Principais
 
 ### Autenticação
+
 - `nitapi/authentication.py` - Backend Keycloak
 - `nitapi/drf_authentication.py` - Classes DRF
 - `nitapi/kong_middleware.py` - Middleware Kong
 
 ### Configurações
+
 - `nitapi/settings/base.py` - Settings principais
 - `.django` - Variáveis de ambiente
 
 ### Modelos
+
 - `apps/users/models.py` - User estendido com keycloak_id
 
 ## 📝 Como Usar Este Boilerplate
@@ -116,14 +113,16 @@ DJANGO_SECRET_KEY=
 ## 🚦 Ambientes
 
 ### Desenvolvimento
+
 - Keycloak local via Docker
 - Kong local via Docker Compose
 - Django runserver
 - PostgreSQL local
 
 ### Produção
-- Keycloak cluster
-- Kong cluster com load balancer
+
+- Keycloak via Docker em servidor separado
+- Kong no servidor das APIs com load balancer
 - Django com Gunicorn + Nginx
 - PostgreSQL com replica
 
@@ -168,6 +167,7 @@ Este boilerplate segue versionamento semântico:
 ### Changelog
 
 Principais mudanças são documentadas em:
+
 - Git tags para versões
 - Commits descritivos
 - Issues para bugs reportados
@@ -190,34 +190,35 @@ Principais mudanças são documentadas em:
 - Docstrings para funções públicas
 - Testes para novas funcionalidades
 
-## 📞 Suporte
-
 ### Documentação Adicional
 
 - [Patterns](./patterns/) - Padrões de desenvolvimento
 - [SQL](./sql/) - Documentação de banco
 - [Storage](./storage/) - Configuração de storage
 
-### Contato
-
 Para dúvidas específicas:
+
 1. Consulte esta documentação
 2. Verifique issues existentes
 3. Crie nova issue se necessário
 
 ### 🛠️ [Setup Docker](./DOCKER-SETUP.md)
+
 Configuração completa usando Docker para desenvolvimento.
 
 **Conteúdo:**
+
 - Docker Compose para Keycloak + Kong
 - Scripts de inicialização automatizada
 - Configuração de desenvolvimento local
 - Troubleshooting Docker
 
 ### ⚙️ [Exemplos de Configuração](./CONFIGURATION-EXAMPLES.md)
+
 Exemplos completos para diferentes ambientes.
 
 **Conteúdo:**
+
 - Configuração desenvolvimento vs produção
 - Docker Compose completo
 - Nginx para produção

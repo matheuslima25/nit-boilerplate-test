@@ -19,7 +19,7 @@ if env("USE_CACHE", cast=bool):
     Local Memory Cache
     Default cache TIMEOUT is five minute (If is none, the cache never expires)
     For more about cache, visit:
-    https://docs.djangoproject.com/en/4.1/topics/cache/
+    https://docs.djangoproject.com/en/5.2/topics/cache/
     """
 
     # CACHES = {
@@ -62,7 +62,8 @@ LOGGING = {
     "formatters": {
         "verbose": {
             "format": (
-                "[{asctime}] {levelname} {module} {process:d} {thread:d} {message}"
+                "[{asctime}] {levelname} {module} {process:d} "
+                "{thread:d} {message}"
             ),
             "style": "{",
         },

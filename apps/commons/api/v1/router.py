@@ -1,6 +1,6 @@
 from rest_framework.routers import DefaultRouter
 
-from .viewsets import *
+from .viewsets import AddressViewSet
 
-core_router = DefaultRouter()
-core_router.register(r"address", AddressViewSet, "address")
+common_router = DefaultRouter()
+common_router.register(r"address", AddressViewSet, "address")

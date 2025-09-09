@@ -8,8 +8,8 @@ logger = logging.getLogger(__name__)
 
 class AdminAuthenticationMiddleware:
     """
-    Middleware que garante que apenas o Django Admin use autenticação tradicional.
-    As rotas da API continuam usando autenticação Keycloak.
+    Middleware que garante que apenas o Django Admin use autenticação
+    tradicional. As rotas da API continuam usando autenticação Keycloak.
     """
 
     def __init__(self, get_response):
@@ -27,7 +27,10 @@ class AdminAuthenticationMiddleware:
         ]
 
         # Verifica se é uma rota admin
-        is_admin_request = any(path.startswith(admin_path) for admin_path in admin_paths)
+        is_admin_request = any(
+            path.startswith(admin_path)
+            for admin_path in admin_paths
+        )
 
         if is_admin_request:
             # Para requisições admin, remove headers de autenticação API

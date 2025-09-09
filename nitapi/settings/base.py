@@ -165,7 +165,7 @@ DATABASES["default"]["ATOMIC_REQUESTS"] = True
 DATABASES["default"]["ENGINE"] = "django.db.backends.postgresql"
 
 # Schema específico para isolamento de dados entre diferentes APIs
-DATABASE_SCHEMA = env("DATABASE_SCHEMA", default="public")
+DATABASE_SCHEMA = env("DATABASE_SCHEMA", default="public")  # type: ignore
 DATABASES["default"]["OPTIONS"] = {
     "options": f"-c search_path={DATABASE_SCHEMA},public"
 }
